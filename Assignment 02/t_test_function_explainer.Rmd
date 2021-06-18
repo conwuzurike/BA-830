@@ -1,0 +1,34 @@
+---
+title: "R File explaining the t.test function"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(data.table)
+library(tidyverse)
+library(ggplot2)
+library(pwr)
+```
+
+This R script describes the t.test function. We will use the dataset about ads and game of thrones. Before we start using the t.test function, we create a second column in the data called 'po.wad' which equals the 'po.noad' plus a random normal with a standard deviation of 10. Note, this would imply that there are different treatment effects across individuals.
+
+```{r}
+set.seed(2312)
+got_ads_data <- fread('ads_noads.csv')
+head(got_ads_data)
+got_ads_data[, po.wad := po.noad + rnorm(.N, mean = 0, sd = 10)]
+```
+
+We can first use the t.test function to obtain the mean, confidence interval, and p-value of a column. The code below shows the mean of the potential outcome without ads, as well as the confidence interval and pvalue. We can see that the pvalue is tiny, which means we can reject the null hypothesis that the mean is equal to 0.
+```{r}
+t.test(got_ads_data$po.noad)
+```
+
+We can also use the t.test function to measure the differences between two columns. We can see that the mean of the second column (potential outcome with ad) is less than the mean of the first column. However, the p-value is .71, meaning we can't reject the null that the difference in means is equal to 0. We can also see that the 95% confidence interval includes 0.
+```{r}
+t.test(got_ads_data$po.noad, got_ads_data$po.wad)
+
+```

@@ -1,0 +1,163 @@
+---
+title: "R File for the Lecture about Uncertainty"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(data.table)
+library(tidyverse)
+library(ggplot2)
+library(pwr)
+```
+
+Our dataset considers the effects of advertising on the revenues from selling dragon glass to the heroes of Westeros. We start with two columns: the name of the hero ('fullname') and the potential outcome of sales (denominated in gold coins) if the heroes see no ads.
+```{r}
+got_ads_data <- fread('ads_noads.csv')
+got_ads_data
+hist(got_ads_data$po.noad)
+```
+
+Let's first assume that the ads have no effect. That is, all of the individual treatment effects are 0. Then the potential outcomes with an ad equal the potential outcomes without an ad.
+
+```{r, echo=FALSE}
+true.effect <- 0
+got_ads_data[, po.withad := po.noad + true.effect]
+# The paste function combines two strings into a longer one.
+paste("The true ATE is", mean(got_ads_data$po.withad) - mean(got_ads_data$po.noad)) # True ATE
+```
+### Sampling Distributions
+
+Now let's calculate the **sampling distribution** of the estimated average treatment effect: $\widehat{ATE}$. The comments in the R chunk below explain every step.
+
+```{r, echo=FALSE}
+### Whenever we being our script, we should set the 'seed'. The seed ensures that if you rerun the script, you get the same exact set of randomizations. 
+set.seed(321)
+
+### Let's get the number of heroes (rows):
+num.people <- nrow(got_ads_data)
+
+### Let's use simple randomization to assign treatment:
+treatment <- rbernoulli(num.people, .5)
+
+### We fill in the outcomes according to randomized treatment status:
+outcome <- ifelse(treatment == 1, got_ads_data$po.withad, got_ads_data$po.noad)
+
+### Calculate our estimate of the ate
+mean(outcome[treatment == 1]) - mean(outcome[treatment == 0])
+```
+
+
+Notice that is definitely not equal to 0!!!!
+Now let's use many randomizations to calculate the sampling distribution.
+```{r}
+### This is a function. Every time we use it, it returns an estimate of the ATE using a different randomization.
+rand.est.ate <- function(){
+  treatment <- rbernoulli(num.people, .5)
+  outcome <- ifelse(treatment == 1, got_ads_data$po.withad, got_ads_data$po.noad)
+  mean(outcome[treatment == 1]) - mean(outcome[treatment == 0])
+}
+
+rand.est.ate()
+```
+
+We can use the 'replicate' function to repeat any function as many times as we want. Let's do that 1000 times for rand.est.ate() and plot the set of estimates.
+```{r}
+samp.dist <- replicate(1000, rand.est.ate())
+samp.dist <- as.data.table(samp.dist)
+samp.dist
+plot_samp_dist <- ggplot(samp.dist, aes(x = samp.dist)) + geom_histogram() + geom_vline(xintercept = true.effect, color = 'red') + xlab('estimate') + ggtitle("Sampling Distribution")
+
+plot_samp_dist
+```
+
+We can see that the sampling distribution is centered around 0, but that there is a lot of variance.
+
+Below, we calculate the standard error and the 95% confidence interval of the estimates.
+```{r}
+se <- sd(samp.dist$samp.dist)
+paste("The standard error is", se)
+
+avg_estimate <- mean(samp.dist$samp.dist)
+
+## Compute the confidence interval and plot it on the distribution:
+conf.int <- c(avg_estimate - 1.96*se, avg_estimate + 1.96*se)
+plot_samp_dist + geom_vline(xintercept = conf.int[1], lwd = 1, color = 'blue') + geom_vline(xintercept = conf.int[2], lwd = 1, col = 'blue')
+```
+
+### P-values: 
+Ok, now let's say that the true effect is 4.
+Let's run one experiment and see what our estimate is.
+
+```{r}
+true_effect <- 4
+got_ads_data[, po.withad := po.noad + true.effect]
+
+
+### Let's use simple randomization to assign treatment:
+treatment <- rbernoulli(num.people, .5)
+
+### We fill in the outcomes according to randomized treatment status:
+outcome <- ifelse(treatment == 1, got_ads_data$po.withad, got_ads_data$po.noad)
+
+### Calculate our estimate of the ate
+ate_hat <- mean(outcome[treatment == 1]) - mean(outcome[treatment == 0])
+ate_hat
+plot_samp_dist + geom_vline(xintercept = ate_hat, lwd = 1, color = 'blue') + geom_vline(xintercept = -ate_hat, lwd = 1, color = 'blue')
+
+```
+
+To calculate the p-value, we see what share of the distribution is greater in absolute value than our ate-hat.
+```{r}
+pval <- mean(abs(samp.dist$samp.dist) > abs(ate_hat))
+paste("The p-value is", pval)
+```
+
+Let's try another randomization:
+```{r}
+### Let's use simple randomization to assign treatment:
+treatment <- rbernoulli(num.people, .5)
+
+### We fill in the outcomes according to randomized treatment status:
+outcome <- ifelse(treatment == 1, got_ads_data$po.withad, got_ads_data$po.noad)
+
+### Calculate our estimate of the ate
+ate_hat <- mean(outcome[treatment == 1]) - mean(outcome[treatment == 0])
+ate_hat
+pval <- mean(abs(samp.dist$samp.dist) > abs(ate_hat))
+paste("The p-value is", pval)
+```
+
+Notice that the p-value changes with each randomization, so it is also a random variable.
+
+## How to calculate p-values and standard errors with one function.
+Use t.test to calculate uncertainty. T.test takes two arguments, the treated outcomes and the control outcomes. Note, this will not equal to exactly what we calculated above since it uses some assumptions
+```{r}
+t.test(outcome[treatment == 1], outcome[treatment == 0])
+```
+
+## Statistical Power
+We can calculate the statistical power of our study by using the function 'pwr.t.test' from the package pwr. Let's figure out how many observations we need to detect an effect of an ad 80% of the time if the true effect is 4.
+
+Remember, we need to know the standard deviation of the outcome. 
+```{r}
+sd_outcome <- sd(outcome)
+power_test <- pwr.t.test(n = NULL, d = true_effect/sd_outcome, sig.level = .05, power = .8)
+power_test
+num_obs_needed <- power_test$n
+paste("We need this many observations:", num_obs_needed)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,814 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{amssymb}
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Assignment 1},
+  pdfauthor={Chiebuka Onwuzurike},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Assignment 1}
+\author{Chiebuka Onwuzurike}
+\date{}
+
+\begin{document}
+\maketitle
+
+\hypertarget{instructions}{%
+\subsubsection{Instructions:}\label{instructions}}
+
+You can use it to create a document that consists of your answers to the
+questions and your R code. Please change your name in the above text
+from ``Your Name Here'' to your name.
+
+\hypertarget{about-r-markdown-notebooks}{%
+\subsubsection{About R Markdown
+Notebooks}\label{about-r-markdown-notebooks}}
+
+This is an \href{http://rmarkdown.rstudio.com}{R Markdown} Notebook.
+When you execute code within the notebook, the results appear beneath
+the code. It can also be used to generate PDFs of your results. Add a
+new chunk by clicking the \emph{Insert Chunk} button on the toolbar or
+by pressing \emph{Cmd+Option+I}. The preview shows you a rendered HTML
+copy of the contents of the editor. Consequently, unlike \emph{Knit},
+\emph{Preview} does not run any R code chunks. Instead, the output of
+the chunk when it was last run in the editor is displayed.
+
+\hypertarget{r-markdown-instruction}{%
+\subsubsection{R markdown instruction}\label{r-markdown-instruction}}
+
+In R markdown files, we put code into `chunks', like the one below. You
+can click the `run' buttom on the code chunk below to run it. As you can
+see, the code chunk returns the output of the R code.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{variable\_1 }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{variable\_2 }\OtherTok{\textless{}{-}} \DecValTok{2}
+\NormalTok{variable\_1 }\SpecialCharTok{+}\NormalTok{ variable\_2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\hypertarget{problem-1}{%
+\subsubsection{Problem 1:}\label{problem-1}}
+
+\hypertarget{section}{%
+\paragraph{1.1}\label{section}}
+
+Our first task will be to read the dataset called `class\_data.csv'. To
+do so, we will use the function `fread' from the package `data.table'.
+Please run the chunk below to load the library and read the data. Run
+this chunk:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Load library \textquotesingle{}data.table\textquotesingle{}}
+\FunctionTok{library}\NormalTok{(data.table)}
+\FunctionTok{library}\NormalTok{(purrr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'purrr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:data.table':
+## 
+##     transpose
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Read the data \#}
+\NormalTok{class\_data }\OtherTok{\textless{}{-}} \FunctionTok{fread}\NormalTok{(}\StringTok{\textquotesingle{}student\_list\_msba2021spring.csv\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+To check that the data has been read successfully, you can type the name
+of the data structure (class\_data) into the console. Or look at the
+environment tab in Rstudio.
+
+Let's print the first few lines using the `head' command.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(class\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              name  user_id           email treatment_group section
+## 1: Patel, Manushi manuship manuship@bu.edu               2      B1
+## 2:      Yu, Lequn    lequn    lequn@bu.edu               4      B1
+## 3:   Sun, Zhiyuan jacobszy jacobszy@bu.edu               1      B1
+## 4:         Li, Bo boli0315 boli0315@bu.edu               0      B1
+## 5:  Leng, Linghan   lenglh   lenglh@bu.edu               3      B1
+## 6:       Guo, Kai kaiguo96 kaiguo96@bu.edu               0      B1
+\end{verbatim}
+
+\hypertarget{reading-your-name}{%
+\paragraph{1.2 Reading your name}\label{reading-your-name}}
+
+Our next goal is to find the row associated with your name. Each row has
+a number, and we can isolate it by that number. We can also specify
+which columns show up. The code below gets the first row, for example.
+Modify it so that your name shows up (use the columns for name and
+user\_id).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{class\_data[}\DecValTok{30}\NormalTok{, }\FunctionTok{list}\NormalTok{(name, user\_id)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              name  user_id
+## 1: Veytsman, Ryan veytsman
+\end{verbatim}
+
+We can also reference a row by the value of that row. The code below
+isolates the rows for which the college is QST. Modify it so that it
+finds the row whose first\_name is your name.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{class\_data[section }\SpecialCharTok{==} \StringTok{\textquotesingle{}A1\textquotesingle{}}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                           name  user_id           email treatment_group section
+##  1:                 Zhu, Shuyi shuyizhu shuyizhu@bu.edu               0      A1
+##  2:                Wang, Jiaqi jwang311 jwang311@bu.edu               3      A1
+##  3:                Zhang, Ying   yingyz   yingyz@bu.edu               2      A1
+##  4:                Li, Mingwei mingweil mingweil@bu.edu               1      A1
+##  5:              Chen, Chuning chuningc chuningc@bu.edu               1      A1
+##  6:               Li, Jiazheng jli12320 jli12320@bu.edu               0      A1
+##  7:                   Ming, Yi   yming2   yming2@bu.edu               3      A1
+##  8:              Shi, Kangjing   kangjs   kangjs@bu.edu               2      A1
+##  9:              Fowlkes, Leah fowlkesl fowlkesl@bu.edu               3      A1
+## 10:                   Shi, Man   mshi10   mshi10@bu.edu               2      A1
+## 11:               Lu, Jingjing ljjjjjjj ljjjjjjj@bu.edu               3      A1
+## 12:                Huang, Anyi  ayhuang  ayhuang@bu.edu               0      A1
+## 13:                 Xu, Jiahui jiahuixu jiahuixu@bu.edu               0      A1
+## 14:           Torres, Maraline matorres matorres@bu.edu               0      A1
+## 15:               Nagesh, Jaya  jnagesh  jnagesh@bu.edu               1      A1
+## 16:            Demacker, Paula demacker demacker@bu.edu               0      A1
+## 17:              Wu, Tsung Yen     tywu     tywu@bu.edu               4      A1
+## 18:          Lensing, Michelle mlensing mlensing@bu.edu               2      A1
+## 19:            Chen, Chang-Han chchen31 chchen31@bu.edu               0      A1
+## 20:             Mao, Tianzheng  markmao  markmao@bu.edu               3      A1
+## 21:            Zhang, Yuanming    mm121    mm121@bu.edu               4      A1
+## 22:                 Cao, Yujia   yc0908   yc0908@bu.edu               0      A1
+## 23:             Kalwe, Shamika  shamika  shamika@bu.edu               3      A1
+## 24:             Ling, Jingjing   jjling   jjling@bu.edu               1      A1
+## 25:                 Shan, Ziqi     ziqi     ziqi@bu.edu               1      A1
+## 26:        Lawrence, Christian chrislaw chrislaw@bu.edu               1      A1
+## 27:               Feng, Yuchen   ycfeng   ycfeng@bu.edu               2      A1
+## 28:            Hou, Chang-Hung    chhou    chhou@bu.edu               0      A1
+## 29:              Grose, Jordan  jpgrose  jpgrose@bu.edu               1      A1
+## 30:            Guo, Zhangcheng     kguo     kguo@bu.edu               3      A1
+## 31:                 Sun, Shiqi  shiqi17  shiqi17@bu.edu               0      A1
+## 32:                 Huo, Lulin huolulin huolulin@bu.edu               1      A1
+## 33:               Jiang, Alice  ayjiang  ayjiang@bu.edu               0      A1
+## 34: Sentissi El Idrissi, Selma selmasen selmasen@bu.edu               1      A1
+## 35:              Zhang, Weilin wzhang97 wzhang97@bu.edu               1      A1
+## 36:                Chen, Cheng  chengcc  chengcc@bu.edu               1      A1
+## 37:              Liang, Xuanqi   xuanqi   xuanqi@bu.edu               2      A1
+## 38:                   Lv, Feng lvfeng00 lvfeng00@bu.edu               4      A1
+## 39:               Gong, Yuting wgongyty wgongyty@bu.edu               1      A1
+## 40:               Wang, Yantao yantwang yantwang@bu.edu               1      A1
+##                           name  user_id           email treatment_group section
+\end{verbatim}
+
+\hypertarget{section-1}{%
+\subsubsection{1.3}\label{section-1}}
+
+Find the treatment group associated with your name.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{class\_data[name }\SpecialCharTok{==} \StringTok{\textquotesingle{}Onwuzurike, Chiebuka\textquotesingle{}}\NormalTok{,}\FunctionTok{list}\NormalTok{(name, treatment\_group)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                    name treatment_group
+## 1: Onwuzurike, Chiebuka               3
+\end{verbatim}
+
+\hypertarget{section-2}{%
+\subsubsection{1.4}\label{section-2}}
+
+Create a new column called `section\_code' that takes the value of 1 if
+the student is in section `A1' and 0 otherwise. The purpose is to use
+this column to calculate what share of students is in each section.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# How to create a new column:}
+\CommentTok{\# class\_data[, test\_column1 := 1]}
+\CommentTok{\# class\_data$test\_column2 \textless{}{-} 2}
+\CommentTok{\# Verify that these two columns were created}
+\CommentTok{\# class\_data[, list(test\_column1, test\_column2)]}
+\NormalTok{class\_data[, section\_code }\SpecialCharTok{:}\ErrorTok{=} \ConstantTok{NULL}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in `[.data.table`(class_data, , `:=`(section_code, NULL)): Column
+## 'section_code' does not exist to remove
+\end{verbatim}
+
+To create a conditional column we can use the `ifelse' function. The
+ifelse function has three parts: a. The first part determines the
+condition. b. The part after the first comma determines what happens if
+a) is true. c.~The part after the second comma determines what happens
+if b) is true. Let's try this! The code below create a column that takes
+the value 1 if your user\_id starts with the letter w and 0 otherwise.
+Note, we use the `substr' function to get the first letter.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{class\_data[, starts\_with\_w }\SpecialCharTok{:}\ErrorTok{=} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{substr}\NormalTok{(user\_id, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)  }\SpecialCharTok{==} \StringTok{\textquotesingle{}w\textquotesingle{}}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)]}
+\CommentTok{\# Check that it works:}
+\NormalTok{class\_data[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{, }\FunctionTok{list}\NormalTok{(starts\_with\_w, user\_id)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    starts_with_w  user_id
+## 1:             0 manuship
+## 2:             0    lequn
+## 3:             0 jacobszy
+## 4:             0 boli0315
+## 5:             0   lenglh
+## 6:             0 kaiguo96
+\end{verbatim}
+
+Create a new column called `section\_code' that takes the value of 1 if
+the student is in section `A1' and 0 otherwise.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{class\_data[, section\_code }\SpecialCharTok{:}\ErrorTok{=} \FunctionTok{ifelse}\NormalTok{(section }\SpecialCharTok{==} \StringTok{"A1"}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{)]}
+\NormalTok{class\_data}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                                name  user_id           email treatment_group
+##  1:                  Patel, Manushi manuship manuship@bu.edu               2
+##  2:                       Yu, Lequn    lequn    lequn@bu.edu               4
+##  3:                    Sun, Zhiyuan jacobszy jacobszy@bu.edu               1
+##  4:                          Li, Bo boli0315 boli0315@bu.edu               0
+##  5:                   Leng, Linghan   lenglh   lenglh@bu.edu               3
+##  6:                        Guo, Kai kaiguo96 kaiguo96@bu.edu               0
+##  7: Moral Cevallos, Antonio Gabriel  antogmc  antogmc@bu.edu               4
+##  8:                    Gong, Yulong   yulong   yulong@bu.edu               4
+##  9:                      Tang, Qiqi qiqitang qiqitang@bu.edu               2
+## 10:                      Xie, Muyan    xiemy    xiemy@bu.edu               0
+## 11:               Mankiewich, Peter   pmmank   pmmank@bu.edu               3
+## 12:                    Pan, Chenzhi panchenz panchenz@bu.edu               3
+## 13:                  Jafari, Mohsen  roozbeh  roozbeh@bu.edu               0
+## 14:                    Zhang, Yichi   yichiz   yichiz@bu.edu               1
+## 15:                    Wang, Yixuan   yx1201   yx1201@bu.edu               2
+## 16:                    Guo, Jiajian prosylar prosylar@bu.edu               3
+## 17:                  Huang, Tzu-Hua huahuang huahuang@bu.edu               0
+## 18:                 Demiralp, Yigit   yigitd   yigitd@bu.edu               1
+## 19:                  Zhou, Yangyang  yyzhous  yyzhous@bu.edu               1
+## 20:                      Li, Zuoyin   zli179   zli179@bu.edu               0
+## 21:          Venkateswaran, Ruchika ruchikav ruchikav@bu.edu               1
+## 22:           Derhovanessians, Maro   marodh   marodh@bu.edu               1
+## 23:                     Qiu, Chenli  karlanq  karlanq@bu.edu               0
+## 24:            Onwuzurike, Chiebuka chiebuka chiebuka@bu.edu               3
+## 25:                      Kim, Bosoo  bwk5100  bwk5100@bu.edu               2
+## 26:                        Wu, Ying  amberwy  amberwy@bu.edu               2
+## 27:                  Wang, Yi-Shuan phoenixw phoenixw@bu.edu               2
+## 28:                    Zheng, Yuzhe  yzzheng  yzzheng@bu.edu               2
+## 29:                     Zhou, Xiang  xzxiang  xzxiang@bu.edu               4
+## 30:                  Veytsman, Ryan veytsman veytsman@bu.edu               2
+## 31:                    Moradi, Tiam  tmoradi  tmoradi@bu.edu               2
+## 32:                     McCoy, John  sjmccoy  sjmccoy@bu.edu               4
+## 33:                     Yu, Xinping     xpyu     xpyu@bu.edu               4
+## 34:                  Leung, Jeffrey jeleung2 jeleung2@bu.edu               2
+## 35:                      Zhu, Shuyi shuyizhu shuyizhu@bu.edu               0
+## 36:                     Wang, Jiaqi jwang311 jwang311@bu.edu               3
+## 37:                     Zhang, Ying   yingyz   yingyz@bu.edu               2
+## 38:                     Li, Mingwei mingweil mingweil@bu.edu               1
+## 39:                   Chen, Chuning chuningc chuningc@bu.edu               1
+## 40:                    Li, Jiazheng jli12320 jli12320@bu.edu               0
+## 41:                        Ming, Yi   yming2   yming2@bu.edu               3
+## 42:                   Shi, Kangjing   kangjs   kangjs@bu.edu               2
+## 43:                   Fowlkes, Leah fowlkesl fowlkesl@bu.edu               3
+## 44:                        Shi, Man   mshi10   mshi10@bu.edu               2
+## 45:                    Lu, Jingjing ljjjjjjj ljjjjjjj@bu.edu               3
+## 46:                     Huang, Anyi  ayhuang  ayhuang@bu.edu               0
+## 47:                      Xu, Jiahui jiahuixu jiahuixu@bu.edu               0
+## 48:                Torres, Maraline matorres matorres@bu.edu               0
+## 49:                    Nagesh, Jaya  jnagesh  jnagesh@bu.edu               1
+## 50:                 Demacker, Paula demacker demacker@bu.edu               0
+## 51:                   Wu, Tsung Yen     tywu     tywu@bu.edu               4
+## 52:               Lensing, Michelle mlensing mlensing@bu.edu               2
+## 53:                 Chen, Chang-Han chchen31 chchen31@bu.edu               0
+## 54:                  Mao, Tianzheng  markmao  markmao@bu.edu               3
+## 55:                 Zhang, Yuanming    mm121    mm121@bu.edu               4
+## 56:                      Cao, Yujia   yc0908   yc0908@bu.edu               0
+## 57:                  Kalwe, Shamika  shamika  shamika@bu.edu               3
+## 58:                  Ling, Jingjing   jjling   jjling@bu.edu               1
+## 59:                      Shan, Ziqi     ziqi     ziqi@bu.edu               1
+## 60:             Lawrence, Christian chrislaw chrislaw@bu.edu               1
+## 61:                    Feng, Yuchen   ycfeng   ycfeng@bu.edu               2
+## 62:                 Hou, Chang-Hung    chhou    chhou@bu.edu               0
+## 63:                   Grose, Jordan  jpgrose  jpgrose@bu.edu               1
+## 64:                 Guo, Zhangcheng     kguo     kguo@bu.edu               3
+## 65:                      Sun, Shiqi  shiqi17  shiqi17@bu.edu               0
+## 66:                      Huo, Lulin huolulin huolulin@bu.edu               1
+## 67:                    Jiang, Alice  ayjiang  ayjiang@bu.edu               0
+## 68:      Sentissi El Idrissi, Selma selmasen selmasen@bu.edu               1
+## 69:                   Zhang, Weilin wzhang97 wzhang97@bu.edu               1
+## 70:                     Chen, Cheng  chengcc  chengcc@bu.edu               1
+## 71:                   Liang, Xuanqi   xuanqi   xuanqi@bu.edu               2
+## 72:                        Lv, Feng lvfeng00 lvfeng00@bu.edu               4
+## 73:                    Gong, Yuting wgongyty wgongyty@bu.edu               1
+## 74:                    Wang, Yantao yantwang yantwang@bu.edu               1
+##                                name  user_id           email treatment_group
+##     section starts_with_w section_code
+##  1:      B1             0            0
+##  2:      B1             0            0
+##  3:      B1             0            0
+##  4:      B1             0            0
+##  5:      B1             0            0
+##  6:      B1             0            0
+##  7:      B1             0            0
+##  8:      B1             0            0
+##  9:      B1             0            0
+## 10:      B1             0            0
+## 11:      B1             0            0
+## 12:      B1             0            0
+## 13:      B1             0            0
+## 14:      B1             0            0
+## 15:      B1             0            0
+## 16:      B1             0            0
+## 17:      B1             0            0
+## 18:      B1             0            0
+## 19:      B1             0            0
+## 20:      B1             0            0
+## 21:      B1             0            0
+## 22:      B1             0            0
+## 23:      B1             0            0
+## 24:      B1             0            0
+## 25:      B1             0            0
+## 26:      B1             0            0
+## 27:      B1             0            0
+## 28:      B1             0            0
+## 29:      B1             0            0
+## 30:      B1             0            0
+## 31:      B1             0            0
+## 32:      B1             0            0
+## 33:      B1             0            0
+## 34:      B1             0            0
+## 35:      A1             0            1
+## 36:      A1             0            1
+## 37:      A1             0            1
+## 38:      A1             0            1
+## 39:      A1             0            1
+## 40:      A1             0            1
+## 41:      A1             0            1
+## 42:      A1             0            1
+## 43:      A1             0            1
+## 44:      A1             0            1
+## 45:      A1             0            1
+## 46:      A1             0            1
+## 47:      A1             0            1
+## 48:      A1             0            1
+## 49:      A1             0            1
+## 50:      A1             0            1
+## 51:      A1             0            1
+## 52:      A1             0            1
+## 53:      A1             0            1
+## 54:      A1             0            1
+## 55:      A1             0            1
+## 56:      A1             0            1
+## 57:      A1             0            1
+## 58:      A1             0            1
+## 59:      A1             0            1
+## 60:      A1             0            1
+## 61:      A1             0            1
+## 62:      A1             0            1
+## 63:      A1             0            1
+## 64:      A1             0            1
+## 65:      A1             0            1
+## 66:      A1             0            1
+## 67:      A1             0            1
+## 68:      A1             0            1
+## 69:      A1             1            1
+## 70:      A1             0            1
+## 71:      A1             0            1
+## 72:      A1             0            1
+## 73:      A1             1            1
+## 74:      A1             0            1
+##     section starts_with_w section_code
+\end{verbatim}
+
+\hypertarget{section-3}{%
+\paragraph{1.4}\label{section-3}}
+
+Calculate the share of students in each section and treatment group In
+order to do this, we will use aggregation features of data.table. This
+is like SQL, if you've used it before. In a data.table, we can group by
+variables (after the second comma) and count them. The code below counts
+the students by college.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# list(num\_students = .N) creates a variable called \textquotesingle{}num\_students\textquotesingle{} that counts students by college}
+\NormalTok{agg\_data }\OtherTok{\textless{}{-}}\NormalTok{ class\_data[, }\FunctionTok{list}\NormalTok{(}\AttributeTok{num\_students =}\NormalTok{ .N), }\FunctionTok{list}\NormalTok{(section)]}
+\NormalTok{agg\_data}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    section num_students
+## 1:      B1           34
+## 2:      A1           40
+\end{verbatim}
+
+Note, we now have two datasets, the original dataset `class\_data' and
+the aggregate data `agg\_data'. We can then calculate the share of
+students by major by dividing by the total number of students. We first
+calculate the total number of students across major by using the
+function `sum' to sum the values of the column `num\_students'. We then
+create a column called `share\_students' by dividing num students by the
+total number of students.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tot\_num\_students }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(agg\_data[, num\_students])}
+\NormalTok{agg\_data[, share\_students }\SpecialCharTok{:}\ErrorTok{=}\NormalTok{ num\_students}\SpecialCharTok{/}\NormalTok{tot\_num\_students]}
+\NormalTok{agg\_data}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    section num_students share_students
+## 1:      B1           34      0.4594595
+## 2:      A1           40      0.5405405
+\end{verbatim}
+
+Below, repeat the above steps to calculate the share of students by each
+value of the column `treatment\_group'.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Your code here:}
+\NormalTok{treatment\_agg\_data }\OtherTok{\textless{}{-}}\NormalTok{ class\_data[, }\FunctionTok{list}\NormalTok{(}\AttributeTok{num\_students =}\NormalTok{ .N), }\FunctionTok{list}\NormalTok{(treatment\_group)]}
+\NormalTok{treatment\_agg\_data[, share\_students }\SpecialCharTok{:}\ErrorTok{=}\NormalTok{ num\_students}\SpecialCharTok{/}\NormalTok{tot\_num\_students]}
+\NormalTok{treatment\_agg\_data}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    treatment_group num_students share_students
+## 1:               2           16      0.2162162
+## 2:               4            9      0.1216216
+## 3:               1           19      0.2567568
+## 4:               0           18      0.2432432
+## 5:               3           12      0.1621622
+\end{verbatim}
+
+\hypertarget{calculate-the-share-of-students-that-has-each-treatment-group-10-points}{%
+\subsubsection{1.5 Calculate the share of students that has each
+treatment group (10
+points)}\label{calculate-the-share-of-students-that-has-each-treatment-group-10-points}}
+
+We can now plot the shares. We do so by using the package `ggplot2'. We
+can load this package by using the command library as below. Remember,
+you must tell R to load packages.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
+
+Now, let's create a bar plot. The ggplot function takes in a dataset
+(the first part of the function), and the values you are going to plot
+(x is the section which will be on the x axis, y is the share\_students
+and will be on the y axis). We then add the plot type: `geom\_bar(stat =
+'identity')'
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{this\_plot }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(agg\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ section, }\AttributeTok{y =}\NormalTok{ share\_students)) }\SpecialCharTok{+} \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{\textquotesingle{}identity\textquotesingle{}}\NormalTok{)}
+\NormalTok{this\_plot}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{assignment1_notebook_files/figure-latex/unnamed-chunk-14-1.pdf}
+
+Repeat the above, but plot the share\_students by treatment group
+
+\hypertarget{plot-a-histogram-of-the-treatment-groups-using-the-ggplot-function.-10-points}{%
+\subsubsection{1.6 Plot a histogram of the treatment groups using the
+ggplot function. (10
+points)}\label{plot-a-histogram-of-the-treatment-groups-using-the-ggplot-function.-10-points}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{that\_plot }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(treatment\_agg\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ treatment\_group, }\AttributeTok{y =}\NormalTok{ share\_students)) }\SpecialCharTok{+} \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{\textquotesingle{}identity\textquotesingle{}}\NormalTok{)}
+\NormalTok{that\_plot}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{assignment1_notebook_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+\hypertarget{randomly-assign-to-treatment-using-simple-randomization}{%
+\subsubsection{1.7 Randomly assign to treatment using simple
+randomization:}\label{randomly-assign-to-treatment-using-simple-randomization}}
+
+Simple randomization amounts to flipping a coin separately for each
+person to determine who gets treated. Let's flip a coin so that 40\% of
+the students are in a new treatment group. To do so, we'll use the
+rbernoulli function. Use ?rbernoulli to look at how it works.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 5 coin flips with probability 20\% of TRUE.}
+\FunctionTok{rbernoulli}\NormalTok{(}\DecValTok{5}\NormalTok{, .}\DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE FALSE  TRUE FALSE  TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Let\textquotesingle{}s check that the mean is close to 20\%. Here we use the function mean to take the average of the sample.}
+\FunctionTok{mean}\NormalTok{(}\FunctionTok{rbernoulli}\NormalTok{(}\DecValTok{1000}\NormalTok{, .}\DecValTok{20}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.207
+\end{verbatim}
+
+We now want to create a column in our dataset that has a 40\% of people
+in the treatment. To do so, we need to tell rbernoulli how many times to
+flip the coin (it's the number of people in the dataset) and the
+probablity. Write the correct code based on the column below:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# class\_data[, treatment := rbernoulli(number of people goes here, probability goes here)]}
+\CommentTok{\# Your code here:}
+\NormalTok{class\_data[, treatment }\SpecialCharTok{:}\ErrorTok{=} \FunctionTok{rbernoulli}\NormalTok{(tot\_num\_students, .}\DecValTok{4}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+Finally, let's look at the share of people in section A1 in the
+treatment group. What do you get?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{class\_data[treatment }\SpecialCharTok{==} \DecValTok{1}\NormalTok{, }\FunctionTok{mean}\NormalTok{(section }\SpecialCharTok{==} \StringTok{\textquotesingle{}A1\textquotesingle{}}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.4333333
+\end{verbatim}
+
+What about the share of students in section B1 in the control group?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Your code here:}
+\NormalTok{class\_data[treatment }\SpecialCharTok{==} \DecValTok{1}\NormalTok{, }\FunctionTok{mean}\NormalTok{(section }\SpecialCharTok{==} \StringTok{\textquotesingle{}B1\textquotesingle{}}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.5666667
+\end{verbatim}
+
+\hypertarget{bonus}{%
+\section{1.8 BONUS}\label{bonus}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{these\_plot }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(agg\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ section, }\AttributeTok{y =}\NormalTok{ share\_students, }\AttributeTok{fill =}\NormalTok{ section)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{\textquotesingle{}identity\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{ (}\AttributeTok{x=} \StringTok{"Section"}\NormalTok{, }\AttributeTok{y=} \StringTok{"Share of Students"}\NormalTok{, }\AttributeTok{title=} \StringTok{"Section v Student Share"}\NormalTok{,}\AttributeTok{colour =} \StringTok{"section"}\NormalTok{, }\AttributeTok{subtitle =} \StringTok{"These Plots"}\NormalTok{)}
+
+\NormalTok{these\_plot}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{assignment1_notebook_files/figure-latex/unnamed-chunk-21-1.pdf}
+\#\#\# Problem 2
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# R code if needed}
+\NormalTok{PO }\OtherTok{\textless{}{-}} \FunctionTok{data.table}\NormalTok{(}\StringTok{"Users"} \OtherTok{=} \FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{10}\NormalTok{))}
+\NormalTok{PO[,}\StringTok{"Yes\_QA"}\SpecialCharTok{:}\ErrorTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{1100}\NormalTok{,}\DecValTok{100}\NormalTok{,}\DecValTok{500}\NormalTok{,}\DecValTok{900}\NormalTok{,}\DecValTok{1600}\NormalTok{,}\DecValTok{2000}\NormalTok{,}\DecValTok{1200}\NormalTok{,}\DecValTok{700}\NormalTok{,}\DecValTok{1100}\NormalTok{,}\DecValTok{140}\NormalTok{)]}
+\NormalTok{PO[,}\StringTok{"No\_QA"} \SpecialCharTok{:}\ErrorTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{1100}\NormalTok{,}\DecValTok{600}\NormalTok{,}\DecValTok{500}\NormalTok{,}\DecValTok{900}\NormalTok{,}\DecValTok{700}\NormalTok{,}\DecValTok{2000}\NormalTok{,}\DecValTok{1200}\NormalTok{,}\DecValTok{700}\NormalTok{,}\DecValTok{1000}\NormalTok{,}\DecValTok{140}\NormalTok{)]}
+\NormalTok{PO}\SpecialCharTok{$}\NormalTok{TE }\OtherTok{\textless{}{-}}\NormalTok{ PO}\SpecialCharTok{$}\NormalTok{Yes\_QA }\SpecialCharTok{{-}}\NormalTok{PO}\SpecialCharTok{$}\NormalTok{No\_QA}
+\NormalTok{PO}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     Users Yes_QA No_QA   TE
+##  1:     1   1100  1100    0
+##  2:     2    100   600 -500
+##  3:     3    500   500    0
+##  4:     4    900   900    0
+##  5:     5   1600   700  900
+##  6:     6   2000  2000    0
+##  7:     7   1200  1200    0
+##  8:     8    700   700    0
+##  9:     9   1100  1000  100
+## 10:    10    140   140    0
+\end{verbatim}
+
+\hypertarget{question-a}{%
+\subsection{Question a}\label{question-a}}
+
+The treatment for this situation is a User saw the Q\&A page on a
+Wayfair's furniture page. The outcomes are the reveune they would spend
+if they had the treatment (User Saw Q\&A) or if they didn't have the
+treatment (User did not see Q\&A).
+
+If User 2 recieved the treatment (Saw Q\&A) then they would spend 100 if
+USer 2 did not recieve the treatment (Did not See Q\&A) then they would
+spend 600.
+
+\hypertarget{question-b}{%
+\subsection{Question b}\label{question-b}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{PO[,}\FunctionTok{list}\NormalTok{(Users,TE)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     Users   TE
+##  1:     1    0
+##  2:     2 -500
+##  3:     3    0
+##  4:     4    0
+##  5:     5  900
+##  6:     6    0
+##  7:     7    0
+##  8:     8    0
+##  9:     9  100
+## 10:    10    0
+\end{verbatim}
+
+Based on the data, Users 1,3,4,6,7,8,and 10 had no treatment effect.
+Users 2 had a negative treatment effect of -500. Users 5 and 9 had a
+positive treatment effect of 900 and 100 respectively.
+
+\hypertarget{question-c}{%
+\subsection{Question c}\label{question-c}}
+
+User with 0 treatment effect were not influenced positvely or negatively
+by seeing the Q\&A page. These users could have no questions or very set
+on purchasing what they purchases. Users with a positive treatment
+effect could have so an answer to a question they had and been swayed to
+buy a product they were on the edge about. Users with a negative
+treatment effect could have either not had seen an answer to their
+question or seen an answers. Ultimately they were swayed to buying less
+products than if they hadn't seen the Q\&A page.
+
+\hypertarget{question-d}{%
+\subsection{Question d}\label{question-d}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{avg }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{mean}\NormalTok{(PO}\SpecialCharTok{$}\NormalTok{Yes\_QA),}\FunctionTok{mean}\NormalTok{(PO}\SpecialCharTok{$}\NormalTok{No\_QA),}\FunctionTok{mean}\NormalTok{(PO}\SpecialCharTok{$}\NormalTok{TE))}
+\NormalTok{avg}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 934 884  50
+\end{verbatim}
+
+The observed average for the treatment was 934. The observed average for
+no treatment was 884. The impact of the treatment was 50. Due to seeing
+the Q\&A page we can see an increase in 50.
+
+\hypertarget{how-long-did-this-assignment-take-you-to-do-hours-how-hard-was-it-easy-reasonable-hard-too-hard}{%
+\section{How long did this assignment take you to do (hours)? How hard
+was it (easy, reasonable, hard, too
+hard)?}\label{how-long-did-this-assignment-take-you-to-do-hours-how-hard-was-it-easy-reasonable-hard-too-hard}}
+
+\end{document}

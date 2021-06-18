@@ -1,0 +1,121 @@
+---
+title: "Assignment 5 - Uber Case"
+author: "Chiebuka Onwuzurike"
+output: html_document
+---
+<style type="text/css">
+
+body{ /* Normal  */
+      font-size: 12px;
+  }
+td {  /* Table  */
+  font-size: 8px;
+}
+h1.title {
+  font-size: 24px;
+  color: DarkRed;
+}
+h1 { /* Header 1 */
+  font-size: 22px;
+  color: DarkBlue;
+}
+h2 { /* Header 2 */
+    font-size: 20px;
+  color: DarkBlue;
+}
+h3 { /* Header 3 */
+  font-size: 16px;
+  font-family: "Times New Roman", Times, serif;
+  color: DarkBlue;
+}
+code.r{ /* Code block */
+    font-size: 12px;
+}
+pre { /* Code block - determines code spacing between lines */
+    font-size: 14px;
+}
+</style>
+
+# Install the packages if you don't have them installed yet. Install them only once, and not when you run your knitting.
+```{r setup, include=FALSE}
+#Please do not change this
+knitr::opts_chunk$set(echo = TRUE)
+options(scipen=1, digits=3)
+
+library(data.table)
+library(tidyverse)
+library(lfe)
+library(fixest)
+library(lubridate)
+library(stargazer)
+library(modelsummary)
+data <- fread('wait_time_switchback_3.csv')
+data[, period_start := parse_date_time(period_start, 'mdy hm')]
+data[, time_of_day := substr(period_start, 12, 19)]
+data[, date := as_date(period_start)]
+```
+
+### 1. Read the HBS Case. What is the difference between Uber POOL and Express POOL? No more than two sentences.
+Uber Pool is a product that offers a discounted fares for riders willing to carpool with other passengers, while still providing door-to-door pickup and drop-off service. Uber Express Pool is just like Uber Pool however, riders need to make a short walk to pickup and drop-off locations for even large discounted fares.
+
+### 2. How did Uber use surveys in designing Uber Express Pool?No more than two sentences. 
+Surveys helped Uber realized a floor and ceiling for pricing and tha most people simply will not wait 15 minutes for a ride ven if prices are far cheaper.
+
+### 3. Suppose Uber was considering a new algorithm to recommend ride destinations in the app. Which type of research strategy should they use (A/B Test, Switchback, Synthetic Control)? No more than two sentences. 
+I'd suggest a switchback strategy because since the treatment will be applied in our app we can control the switching back and forth. Additionally we will be able to reduce the noise from different days or times of day.
+
+### 4. Suppose Uber was considering a radio advertising campaign. Which type of research strategy should they use (A/B Test, Switchback, Synthetic Control)?  No more than two sentences.
+Synthetic control because there may not be significant difference on when an ad is shown (no need for switch back), however we may still need to cluster to remove noise. Additionally when showing an add we need to use another 3rd party to advertise such as a radio station and won't have full control of the implementation.
+
+
+### 5. Create two new columns in the dataset that represent the total number of trips for both pool products and the profit from these products. (10 points)
+
+```{r}
+data[, total_trips := trips_pool + trips_express_pool]
+data[, profit := revenue - total_driver_payout_sr]
+
+```
+
+### 6. Plot the average number of trips as a function of the time of the day. Describe a reason why this pattern exists (no more than 2 sentences). (20 points)
+Most days the average number of trips are the same however, 7:00 and 15:00 are busier hours with increased demand in general.
+
+```{r}
+data_avg_trip_time <- data[, list( avg_trips = mean(total_trips)), list(time_of_day)]
+ggplot(data_avg_trip_time, aes(x = time_of_day, y = avg_trips)) + geom_bar(stat = 'identity')+
+labs (x= "Time of Day", y= "Average Num of Trip", title= "Time of Day v Average Num of Trip")
+```
+
+# B: Regression analysis of outcomes.
+
+### 7. Conduct a regression analysis of the experiment (considering the outcomes: revenue, total_driver_payout_sr, rider_cancellations, total_trips). Make sure to think carefully about the correct regression specification. The regression output should be easy to read, so use ‘etable’ or ‘modelsummary’. What do you learn in words from this regression analysis (no more than 5 sentences but it can be less)?
+
+With the addition of the treatment effect of 5 mins, rider cancellation increases and total driver payout decreases both a 95% statistical confidence. Revenue and total trips also decrease but not a statistically significant level. I also added profit to the regression to see the combined effect on decreased rider payout and decrease revenue. The profit increase 1,829 during the treatment at more than a 95% statistical confidence level. The treatment reduces rider experience seen from the increased cancellation, however increases efficiency seen by the increase in total profit. 
+
+
+```{r, warning=FALSE}
+
+regs <- feols( c(profit, revenue, total_driver_payout_sr, rider_cancellations, total_trips)~ treat | time_of_day + date, data, se= "white")
+etable(regs)
+```
+
+
+### 8. One of your data scientists suggests that the optimal wait time may differ by whether it’s a commuting period. Test whether the effects of a 5 minute wait period on total trips and cancelations differ by whether it’s a commuting period (the column 'commute'). Which policy works better during commute times? (10 points)
+
+When treatment equals true (5 min wait), there is an increase of total trips from  1193 to 1288 both at the 95% statistically confidence interval. There is also an increase of cancellations from 99 to 143 both at the 95% statistically confidence interval. However I wanted to look at the profit and with the policy of 5 minutes the profit increased from 3107 to 4275 both at the 95% statistically confidence interval. I say they should do the policy because it has increase profit for commuting and non commuting hours. Or do hybrid where they have the policy during commuting hours to have less cancellations and have the policy during non commuting hour so have more profit.
+
+
+
+```{r, warning=FALSE}
+regs_commute <- feols( c(profit,total_trips,rider_cancellations)~ commute * treat | time_of_day + date, data, se= "white")
+etable(regs_commute)
+
+
+regs_commute_true <- feols( c(profit,total_trips,rider_cancellations)~ commute | time_of_day + date, data[treat==TRUE,], se= "white")
+etable(regs_commute_true)
+
+regs_commute_false <- feols( c(profit,total_trips,rider_cancellations)~ commute | time_of_day + date, data[treat==FALSE,], se= "white")
+etable(regs_commute_false)
+
+```
+
+# How much time did this assignment take you? How hard was it? (easy, moderate, hard, too hard)
